@@ -24,3 +24,21 @@ exports.init = function (callback) {
 
  
 };
+exports.listerSessions = function (callback) {
+    request('http://2018.breizhcamp.org/json/others.json', { json: true }, function (err, res, body) {
+        if (err) { return console.log('Erreur', err); }
+
+        // body contient les données récupérées
+        talks = talks.concat(body)
+
+        request('http://2018.breizhcamp.org/json/talks.json', { json: true }, function (err, res, body) {
+            if (err) { return console.log('Erreur', err); }
+
+            // body contient les données récupérées
+            talks = talks.concat(body)
+            callback(talks);
+        });
+    });
+
+
+};
