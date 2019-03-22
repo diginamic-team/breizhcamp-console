@@ -1,6 +1,7 @@
 # breizhcamp-console
 
 Les urls recherchées :
+
 - http://2018.breizhcamp.org/json/others.json
 - http://2018.breizhcamp.org/json/talks.json
 
@@ -9,4 +10,3 @@ Les urls recherchées :
 - [x] Saisie utilisateur
 - [ ] Liste des présentateurs
 - [ ] Détail session
-
