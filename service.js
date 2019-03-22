@@ -38,3 +38,14 @@ exports.init = function (callback) {
     
     
 };
+
+exports.listerSession = function(fnCallback){
+    if (talks){
+        fnCallback(talks);
+    }
+    else{
+        exports.init(function(){
+            fnCallback(talks);
+        });
+    }
+};
