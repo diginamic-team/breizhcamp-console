@@ -41,9 +41,13 @@ function poseQuestion(){
             }
 
             if (saisie == 3) {
-                service.init(function (nb) {
-                    console.log('Données mises à jour')
-                });
+                service.listerPresentateurs(function (listerPresentateurs) {
+                    listerPresentateurs.forEach(function (presentateur) {
+                 console.log(presentateur);
+                    });
+                    })        
+                    
+            
                 poseQuestion();
             }
 
