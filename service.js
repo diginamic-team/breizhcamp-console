@@ -1,17 +1,21 @@
 // tableau qui contiendra toutes les sessions du BreizhCamp
-var talks = [];
+// commande pour initialiser avec exports, avec plusieurs parametres : module.exports = { }
+// technique callback : donne un parametre a une fonction qui vise a etre appele avec le resultat associé
+
+/*var talks = [];
 
 exports.init = function (callback) {
 
    callback(12);
 
 };
+*/
 
 // tableau qui contiendra toutes les sessions du BreizhCamp
-var talks = [];
+var talks;
 var request = require('request')
 exports.init = function (callback) {
-
+    talks = [];
     // TODO effectuer les requêtes HTTP permettant de récupérer les données du BreizhCamp
 
     // Envoie de la requête http
@@ -28,12 +32,17 @@ exports.init = function (callback) {
     // body contient les données récupérées
         talks = talks.concat(body);
 
-        callback(talks.length)
+        callback(talks.length);
     });
     });
+};
 
-    // TODO     => une fois les données récupérées, alimenter la variable talks
-
-    // TODO         => invoquer la callback avec le nombre de sessions récupérées
-
+exports.listerSession = function (callback) {
+    if (talks) {
+        callback(talks);
+    } else {
+        exports.init(function(nbSession) { // init est asynchrone...donc il faut etre sur que init soit finie, donc use de callback
+        callback(talks);
+        });
+    }
 };
