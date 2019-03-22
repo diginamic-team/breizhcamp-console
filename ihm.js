@@ -18,6 +18,7 @@ function poseQuestion(){
         '************************* \n \n'
         + '1. Rafraichir les données \n'
         + '2. Lister les sessions \n'
+        + '3. Lister les présentateurs \n'
         + '99. Quitter \n'
 
 
@@ -31,9 +32,18 @@ function poseQuestion(){
             }
 
             if (saisie == 2) {
-                service.listerSessions(function (nb) {
-                    console.log(nb);
-                })
+             service.listerSessions(function (listerSessions) {
+                 listerSessions.forEach(function (uneSession) {
+                     console.log(uneSession.name)
+                 })        
+             })
+                poseQuestion();
+            }
+
+            if (saisie == 3) {
+                service.init(function (nb) {
+                    console.log('Données mises à jour')
+                });
                 poseQuestion();
             }
 

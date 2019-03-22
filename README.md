@@ -1,6 +1,6 @@
 # breizhcamp-console
 
-## 1 Initialisation Projet
+## #1 Initialisation Projet
 
 
 - [x] Créer un répertoire breizhcamp-2018-console.
@@ -22,7 +22,7 @@
 - [x] Vérifier l'affichage :
 
 
-## 2 Initialiser les données sessions
+## #2 Initialiser les données sessions
 
 
 - [x] Installer la librairie via NPM
@@ -60,7 +60,7 @@
 
 - [x]  Tester l'ensemble via npm start et vérifier que les sessions sont bien récupérées.
 
-## 3 Saisie Utilisateur
+## #3 Saisie Utilisateur
 
 - [x] Créer un fichier prototype/proto-readline.js.
 
@@ -68,6 +68,14 @@
 
 - [x] Implémenter le menu :
 
+## #4 Liste des présentateurs
 
-- [ ] Case non cochée
-- [x] Case cochée
+Installer jsdom
+
+- [x]Créer un fichier exemple prototype/unePage.html.
+
+- [x]Créer un fichier prototype/proto-jsdom.js.
+
+- [x]Exécuter le script node prototype/proto-jsdom.js et vérifier l'affichage.
+
+- [] Implémenter le menu :
