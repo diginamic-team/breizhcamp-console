@@ -1,8 +1,7 @@
 var service = require('./service');
 
 exports.start = function () {
-    service.init(function (nb) {
-        //console.log('[init]', nb, 'sessions trouvées.')
+    service.init(function () {
         question()
     });
     var readline = require('readline');
@@ -16,7 +15,7 @@ exports.start = function () {
         rl.question('************************* \n 1. Rafraichir les données \n 2. Lister les sessions \n99. Quitter: ', function (saisie) {
         if (saisie == '1') {
             service.session(function () {
-                console.log('...Données mises à jour')
+                console.log('\n...Données mises à jour')
             });
             question()
         }else if (saisie == '2') {
