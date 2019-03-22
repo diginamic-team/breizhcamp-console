@@ -22,18 +22,23 @@ var rl = readline.createInterface({
 
 
 rl.question('****************\n1. Rafaîchir les données \n2.Lister les sessions\n99.Quitter\n',function(saisie){
-    if(saisie==1){
+    if(saisie==='1'){
        
             service.init(function(nb){
                 console.log('.... données mises à jour')
             });
     }
 
-    if(saisie==2){
-        service.listerSessions(callback);
+    if(saisie==='2'){
+        service.listerSessions(function(listeSessions){
+            var listAff = '';
+            listeSessions.forEach(function(uneSession){
+                console.log(uneSession.name);
+            });
+        });
     }
 
-    if(saisie==99){
+    if(saisie==='99'){
        rl.close();
     }
 });

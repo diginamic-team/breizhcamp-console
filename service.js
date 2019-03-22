@@ -29,14 +29,15 @@ exports.init = function (callback) {
     
 };
 
-exports.listerSessions = function(callback){
-    var request = require('request')
+exports.listerSessions = function(fnCallback){
+   
+    if(talks){
+        fnCallback(talks);
+    }else{
+        exports.init(function(nbSession){
+            fnCallback(talks);
+        });
 
-// Envoie de la requête http
-request('https://www.breizhcamp.org/json/talks.json', { json: true }, function(err, res, body) {
-    if (err) { return console.log('Erreur', err); }
+    }
 
-    // body contient les données récupérées
-    console.log(body);
-});
-}
+};
