@@ -78,4 +78,4 @@ Installer jsdom
 
 - [x] Exécuter le script node prototype/proto-jsdom.js et vérifier l'affichage.
 
-- [] Implémenter le menu :
+- [ ] Implémenter le menu :
