@@ -1,0 +1,24 @@
+{
+  "name": "breizhcamp-console",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "hello": "ls -l"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/diginamic-team/breizhcamp-console.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/diginamic-team/breizhcamp-console/issues"
+  },
+  "homepage": "https://github.com/diginamic-team/breizhcamp-console#readme",
+  "dependencies": {
+    "request": "^2.88.0"
+  }
+}
