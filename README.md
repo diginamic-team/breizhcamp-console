@@ -72,10 +72,10 @@
 
 Installer jsdom
 
-- [x]Créer un fichier exemple prototype/unePage.html.
+- [x] Créer un fichier exemple prototype/unePage.html.
 
-- [x]Créer un fichier prototype/proto-jsdom.js.
+- [x] Créer un fichier prototype/proto-jsdom.js.
 
-- [x]Exécuter le script node prototype/proto-jsdom.js et vérifier l'affichage.
+- [x] Exécuter le script node prototype/proto-jsdom.js et vérifier l'affichage.
 
 - [] Implémenter le menu :
