@@ -1,45 +1,50 @@
 // importation de la librairie request
 // recherche par défaut dans le répertoire node_modules
-var request = require('request')
+var request = require('request-promise-native')
 var jsdom = require('jsdom');
 
 
 // tableau qui contiendra toutes les sessions du BreizhCamp
 var talks;
-
-exports.init = function (callback) {
+const URL_TALKS = ['http://2018.breizhcamp.org/json/others.json','http://2018.breizhcamp.org/json/talks.json' ];
+exports.init = () => {
     talks = [];
-    request('http://2018.breizhcamp.org/json/others.json', { json: true }, function (err, res, body) {
-        if (err) { return console.log('Erreur', err); }
 
-         // body contient les données récupérées
-       talks = talks.concat(body)
 
-        request('http://2018.breizhcamp.org/json/talks.json', { json: true }, function (err, res, body) {
-            if (err) { return console.log('Erreur', err); }
-
-            // body contient les données récupérées
-            talks = talks.concat(body)
-            callback(talks.length);
-        });
+    return Promise.all(URL_TALKS.map(url => request(url, {
+         json: true
+         })))
+    .then(resulstats => {
+        talks = talks.concat(resulstats[0], resulstats[1]);
+        return talks.length;
     });
+};
 
+   
  
-};
-exports.listerSessions = function (fnCallBack) {
+
+/* exports.listerSessions = () => {
     if(talks){
-        fnCallBack(talks);
+   return Promise.resolve(talks);
     }else{
-        exports.init(function(){
-            fnCallBack(talks);
-        })
-    }
-  
-};
+       return exports.init()
+        .then(() => talks)
+        }
+} */
+exports.listerSessions = () =>    talks ? Promise.resolve(talks) : exports.init().then(() => talks);
+
+
+
+
+
 var presentateurs;
-exports.listerPresentateurs = function (fnCallBack) {
+exports.listerPresentateurs = () =>{
+    presentateurs = [];
+
+    return new Promise(function (resolve, reject) {
+   
     request('http://2018.breizhcamp.org/conference/speakers', {}, function (err, res, body) {
-        presentateurs = [];
+      
         if (err) { return console.log('Erreur', err);
          }
      
@@ -51,10 +56,11 @@ exports.listerPresentateurs = function (fnCallBack) {
          //   console.log(presentateur.innerHTML);
             presentateurs.push(presentateur.innerHTML);
         });
-        fnCallBack(presentateurs)
-
+        resolve(presentateurs);
+    
     })
-};
+})
+}
 
 function initPromesse(){
     talks =[];

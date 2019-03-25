@@ -7,11 +7,14 @@ var rl = readline.createInterface({
 });
 
 
-exports.start = function () {
-    service.init(function (nb) {
-        console.log(nb);
-    }) 
- 
+exports.start =  function (){
+/*     service.init(() =>); */
+    
+    service.init()
+    .then((nb) =>{
+    console.log(nb , 'sessions trouvées')
+    }); poseQuestion()
+}
     
 function poseQuestion(){
     rl.question(
@@ -25,30 +28,32 @@ function poseQuestion(){
         , function (saisie) {
 
             if (saisie == 1) {
-                service.init(function (nb) {
-                    console.log('Données mises à jour')
-                });
+                service.init().then((nb) => {
+                    console.log(nb, 'sessions trouvées')
+                }); 
                 poseQuestion();
             }
 
             if (saisie == 2) {
-             service.listerSessions(function (listerSessions) {
-                 listerSessions.forEach(function (uneSession) {
-                     console.log(uneSession.name)
-                 })        
+             service.listerSessions().then((session)=> {
+             session.forEach( s =>  console.log(s.name)   ) 
+              session.map( s => console.log(s.name));  
+                 poseQuestion();
              })
-                poseQuestion();
+    
             }
 
             if (saisie == 3) {
-                service.listerPresentateurs(function (listerPresentateurs) {
-                    listerPresentateurs.forEach(function (presentateur) {
-                 console.log(presentateur);
-                    });
-                    })        
+                service.listerPresentateurs().then((presentateurs) => {
+                    presentateurs.forEach((presentateur) => {
+                    console.log(presentateur);
+                    }
+                    );
+                    poseQuestion();
+                })        
                     
             
-                poseQuestion();
+              
             }
 
             if (saisie == 99) {
@@ -58,10 +63,10 @@ function poseQuestion(){
 
         });
 }
-    poseQuestion();
+  
 
  
-}
+
 
 
 
