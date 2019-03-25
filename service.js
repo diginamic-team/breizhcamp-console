@@ -67,7 +67,6 @@ exports.init$ = ()  => {
 };
 
 // exports.listerSession = function (callback) {
-//     return new Promise(function(resolve,reject) {
 //     if (talks) {
 //         callback(talks);
 //     } else {

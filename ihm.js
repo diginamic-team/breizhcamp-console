@@ -27,9 +27,14 @@ exports.start = function() {
                 if (saisie === '2') {
                     //promesse
                     service.listerSession$() 
-                        .then(talks => talks.forEach(talk =>console.log(talk.name)))
+                        .then(talks => talks.forEach(talk => console.log(talk.name)))
                         .catch(err => {console.log(err)
                         })  
+                }
+
+                if (saisie === '3') {
+                    //promesse
+
                 }
         
                 if (saisie == '99') {
