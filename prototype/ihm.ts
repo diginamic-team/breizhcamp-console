@@ -26,14 +26,14 @@ function interrogateQuestion(){
         , function (saisie) {
 
             if (saisie == 1) {
-                service.init(function (nb) {
+                service.init( (nb) => {
                     console.log('Données mises à jour')
                 });
                 poseQuestion();
             }
 
             if (saisie == 2) {
-                service.listerSessions(function (nb) {
+                service.listerSessions( (nb)=> {
                     console.log(nb);
                 })
                 poseQuestion();
@@ -47,3 +47,27 @@ function interrogateQuestion(){
         });
 }
     interrogateQuestion();
+
+
+    exports.init = () => {
+
+        talks = []; 
+    
+        return Promise.all(URLS_TALKS.map(url => request(url, { json: true })))
+        .then(results => {
+            talks = talks.concat(results[0], results[1]);
+            return talks.length;
+        }); 
+    };
+
+
+
+    exports.listerSessions = () => talks ? Promise.resolve(talks) : exports.init().then(() => talks);
+
+    exports.session = () => {
+        if (talks) {
+            return Promise.resolve(talks);
+        } else {
+            return exports.init().then(() => talks);
+        }
+    }
