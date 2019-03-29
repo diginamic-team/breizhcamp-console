@@ -1,40 +1,48 @@
-var service = require('./service');
+const service = require("./service");
 
-exports.start = function () {
-    service.init(() =>  question());
-    var readline = require('readline');
+exports.start = function() {
+  const readline = require("readline");
+  const rl = readline.createInterface({
+    input: process.stdin,
+    output: process.stdout
+  });
+  service.init().then(nb => {
+    console.log(nb, "sessions trouve");
+    question();
+  });
 
-    var rl = readline.createInterface({
-        input: process.stdin,
-        output: process.stdout
-    });
-
-    function question(){
-        rl.question(`*************************
+  function question() {
+    rl.question(
+      `*************************
         1. Rafraichir les données
         2. Lister les sessions
         3. Lister les presentateurs
-        99. Quitter: `, function (saisie) {
-        if (saisie == '1') {
-            service.session(function () {
-                console.log(`\n...Données mises à jour`)
+        99. Quitter: `,
+      function(saisie) {
+        if (saisie == "1") {
+            service.init().then(()=> {
+                console.log(".... donnees mises a jour");
+                question();
             });
-            question()
-        }else if (saisie == '2') {
-            service.session((sessions) => console.log(sessions));
-            question();
-        }else if (saisie == '3') {
-            service.presentateurs$()
-            .then((pre)=>console.log(pre))
-            .catch(()=>print(`error`));
-            question();
+        }  else if (saisie == "3") {
+          service
+            .listerPres()
+            .then(pre => {
+                console.log(pre)
+                question();
+            })
+            .catch(() => print(`error`));
+           
+        } else if (saisie == "2") {
+            service.listerSessions().then(session => {
+                console.log(session.map(s => s.name).join('\n'));
+               //session.map( s => console.log(s.name));
+                question();
+            })
+        } else if (saisie == "99") {
+          rl.close(); // attention, une fois l'interface fermée, la saisie n'est plus possible
         }
-        else if (saisie == '2') {
-            service.session((sessions) =>console.log(sessions));
-            question();
-        }else if (saisie == '99') {
-            rl.close();// attention, une fois l'interface fermée, la saisie n'est plus possible
-        }
-    });}
+      }
+    );
+  }
 };
-

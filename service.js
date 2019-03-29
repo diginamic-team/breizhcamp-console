@@ -1,119 +1,36 @@
 // tableau qui contiendra toutes les sessions du BreizhCamp
 let talks;
-const request = require("request");
-let present;
-exports.init = function(callback) {
-  talks = [];
-  present = [];
-  request(
-    "http://2018.breizhcamp.org/json/others.json",
-    { json: true },
-    function(err, res, body) {
-      if (err) {
-        return console.log("Erreur", err);
-      }
+let presentateurs;
+const request = require("request-promise-native");
 
-      talks = talks.concat(body);
-      request(
-        "http://2018.breizhcamp.org/json/talks.json",
-        { json: true },
-        function(err, res, body) {
-          if (err) {
-            return console.log("Erreur", err);
-          }
+const URL_TALKS = ["http://2018.breizhcamp.org/json/others.json", "http://2018.breizhcamp.org/json/talks.json",]
+exports.init =()=> {
+ talks = [];
 
-          talks = talks.concat(body);
-          callback(talks.length);
-        }
-      );
-    }
-  );
-};
-
-exports.init$ = function init$() {
-  talks = [];
-  present = [];
-  return new Promise(function (resolve, reject) {
-    "http://2018.breizhcamp.org/json/others.json",
-      { json: true },
-      function (err, res, body) {
-        if (err) {
-          reject(err);
-        }
-        else {
-          const jsdom = require("jsdom");
-          const fs = require("fs");
-          const dom = new jsdom.JSDOM(body);
-          const pres = dom.window.document.querySelectorAll(".media-heading");
-          pres.forEach(function (lg) {
-            present.push(lg.innerHTML);
-            console.log(lg.innerHTML);
-          });
-          resolve(present);
-        }
-      };
-  });
+   return Promise.all(URL_TALKS.map(url => request(url, { json: true }))).then(results =>{
+    talks = talks.concat(results[0],results[1]);
+    return talks.length;
+  })
 }
 
-exports.session = function(callback) {
+exports.listerSessions = () =>{
   if (talks) {
-    callback(talks);
+     return Promise.resolve(talks);
   } else {
-    exports.init(function(nbrSession) {
-      callback(talks);
-    });
+    return exports.init().then(() => talks);
   }
 };
-
-
-
-
-exports.presentateurs$ = function presentateurs$() {
-  return new Promise(function (resolve, reject) {
-    request("http://2018.breizhcamp.org/conference/speakers", {}, function(
-      err,
-      res,
-      body
-    ) {
-      if (err) {
-        reject(err);
-      } else {
+exports.listerPres = () => {
+  presentateurs = [];
+ 
+  request("http://2018.breizhcamp.org/conference/speakers", {}).then(()=>{
         const jsdom = require("jsdom");
         const fs = require("fs");
         const dom = new jsdom.JSDOM(body);
         const pres = dom.window.document.querySelectorAll(".media-heading");
-        pres.forEach(function(lg) {
-          present.push(lg.innerHTML);
-          console.log(lg.innerHTML);
-        });
-        resolve(present);
-      }
-    });
+        pres.forEach(function (lg) {
+        presentateurs.push(lg.innerHTML);
+  return presentateurs;
   });
+});
 }
-/*  VERSION CALLBAcK
-exports.presentateurs = function(callback) {
-  request("https://www.breizhcamp.org/conference/speakers/", {}, function(
-    err,
-    res,
-    body
-  ) {
-    if (err) {
-      callback(err);
-    }
-    const jsdom = require("jsdom");
-
-    // récupération de la page HTML exemple
-    const fs = require("fs");
-    //var pageHTML = fs.readFileSync("./prototype/unePage.html").toString();
-    // var pageHTML = fs.body.toString();
-
-    const dom = new jsdom.JSDOM(body);
-    const pres = dom.window.document.querySelectorAll(".media-heading");
-    pres.forEach(function(lg) {
-      present.push(lg.innerHTML);
-      console.log(lg.innerHTML);
-    });
-    callback(present);
-  });
-}; */
