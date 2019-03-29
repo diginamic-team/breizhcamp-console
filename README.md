@@ -12,12 +12,12 @@
 - [x] Compréhension et modification du code de requête pour avoir le nombre de session
 - [x] Apprentissage du CALLBACK pour les fonctions Asynchrone 
 - [x] Initilisation de l'application ainsi que la mise en place du IHM TRES basique
-- [x] 
+- [x] Utilisation du ReadLine pour la saisie utilisateur dans la console
 - [x] 
 - [x] 
 - [x] 
 
 
 
--[ ]
+- [ ]
 - [x]

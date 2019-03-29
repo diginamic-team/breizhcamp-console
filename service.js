@@ -17,35 +17,21 @@ exports.init = function (callback) {
 
 // tableau qui contiendra toutes les sessions du BreizhCamp
 var talks = [];
-const request = require('request');
-
-exports.init = function (callback) {
-
-    request('http://2018.breizhcamp.org/json/talks.json', { json: true }, (err, res, body) => {
-        if (err) { return console.log(err); }
-
-            talks = talks.concat(body);
-            request('http://2018.breizhcamp.org/json/others.json', { json: true }, (err, res, body) => {
-                if (err) { return console.log(err); }
-        
-                talks = talks.concat(body);
-
-                callback(talks.length);
-
-        
-              });
-    });
-    
-    
+const request = require('request-promise-native');
+const URLTALKS = ['http://2018.breizhcamp.org/json/talks.json', 'http://2018.breizhcamp.org/json/others.json'];
+exports.init = () =>{
+    talks = [];
+    return Promise.all(URLTALKS.map(url => request(url, { json: true }))).then(results => { 
+        results.forEach(result => talks = talks.concat(result)); return talks.length})
 };
 
-exports.listerSession = function(fnCallback){
-    if (talks){
-        fnCallback(talks);
+exports.listerSession = function () {
+    if (talks.length > 0) {
+        return Promise.resolve(talks);
     }
-    else{
-        exports.init(function(){
-            fnCallback(talks);
-        });
+    else {
+       return exports.init()
+            .then(() => talks);
     }
 };
+
