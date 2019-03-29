@@ -25,10 +25,8 @@ exports.start = function() {
                 question();
             });
         }  else if (saisie == "3") {
-          service
-            .listerPres()
-            .then(pre => {
-                console.log(pre)
+          service.listerPres().then(p => {
+            console.log(p.map(pre => pre ).join("\n"));
                 question();
             })
             .catch(() => print(`error`));

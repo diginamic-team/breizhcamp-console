@@ -22,15 +22,14 @@ exports.listerSessions = () =>{
 };
 exports.listerPres = () => {
   presentateurs = [];
- 
-  request("http://2018.breizhcamp.org/conference/speakers", {}).then(()=>{
-        const jsdom = require("jsdom");
-        const fs = require("fs");
-        const dom = new jsdom.JSDOM(body);
-        const pres = dom.window.document.querySelectorAll(".media-heading");
-        pres.forEach(function (lg) {
-        presentateurs.push(lg.innerHTML);
-  return presentateurs;
+
+  return request("http://2018.breizhcamp.org/conference/speakers", {}).then((body) => {
+    const jsdom = require("jsdom");
+    const dom = new jsdom.JSDOM(body);
+    const pres = dom.window.document.querySelectorAll(".media-heading");
+    pres.forEach(function (lg) {
+      presentateurs.push(lg.innerHTML);
+    });
+    return presentateurs;
   });
-});
 }
