@@ -1,14 +1,17 @@
-var service = require('./service');
-var readline = require('readline');
+let Service = require('./service');
+let readline = require('readline');
+
+let s = new Service();
 
 exports.start = function() {
-    service.init(function(nb) {
+  
+    s.init(function(nb) {
         console.log('[init]', nb, 'sessions trouvées.')
     });
 };
 
 
-var rl = readline.createInterface({
+let rl = readline.createInterface({
     input: process.stdin,
     output: process.stdout
 });
@@ -20,25 +23,34 @@ var rl = readline.createInterface({
     rl.close();// attention, une fois l'interface fermée, la saisie n'est plus possible
 });*/
 
-
-rl.question('****************\n1. Rafaîchir les données \n2.Lister les sessions\n99.Quitter\n',function(saisie){
+function poseQuestion(){
+rl.question(`****************
+1. Rafaîchir les données 
+2.Lister les sessions
+99.Quitter`,function(saisie){
     if(saisie==='1'){
        
-            service.init(function(nb){
-                console.log('.... données mises à jour')
+            s.init().then((nb)=>{
+                console.log(nb+" sessions trouvées");
+                poseQuestion();
             });
+            
     }
 
     if(saisie==='2'){
-        service.listerSessions(function(listeSessions){
-            var listAff = '';
+        s.listerSessions().then(listeSessions=>{
+
             listeSessions.forEach(function(uneSession){
                 console.log(uneSession.name);
+               
             });
+            poseQuestion();
         });
     }
 
     if(saisie==='99'){
        rl.close();
     }
-});
+})};
+
+poseQuestion();

@@ -19,6 +19,8 @@
   },
   "homepage": "https://github.com/diginamic-team/breizhcamp-console#readme",
   "dependencies": {
-    "request": "^2.88.0"
+    "jsdom": "^14.0.0",
+    "request": "^2.88.0",
+    "request-promise-native": "^1.0.7"
   }
 }
