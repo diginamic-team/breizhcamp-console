@@ -1,0 +1,22 @@
+{
+  "name": "breizhcamp-2018-console",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@types/jsdom": "^12.2.3",
+    "@types/node": "^11.11.6",
+    "@types/request-promise-native": "^1.0.15",
+    "jsdom": "^14.0.0",
+    "request": "^2.88.0",
+    "request-promise-native": "^1.0.7",
+    "ts-node": "^8.0.3",
+    "typescript": "^3.3.4000"
+  }
+}
